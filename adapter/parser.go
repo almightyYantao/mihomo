@@ -104,6 +104,13 @@ func ParseProxy(mapping map[string]any, options ...ProxyOption) (C.Proxy, error)
 			break
 		}
 		proxy, err = outbound.NewWireGuard(*wgOption)
+	case "iwan":
+		iwanOption := &outbound.IwanOption{BasicOption: basicOption}
+		err = decoder.Decode(mapping, iwanOption)
+		if err != nil {
+			break
+		}
+		proxy, err = outbound.NewIwan(*iwanOption)
 	case "tuic":
 		tuicOption := &outbound.TuicOption{BasicOption: basicOption}
 		err = decoder.Decode(mapping, tuicOption)
